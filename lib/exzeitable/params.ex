@@ -70,6 +70,8 @@ defmodule Exzeitable.Params do
     formatter: {Format, :format_field}
   ]
 
+  @required_fields [:query, :repo, :routes, :path, :fields, :module, :csrf_token]
+
   @default_fields [
     label: nil,
     function: false,
@@ -120,7 +122,7 @@ defmodule Exzeitable.Params do
     |> Map.new()
     |> Map.merge(%{fields: fields, module: module, csrf_token: token})
     |> Validations.paired_options()
-    |> Validations.required_keys_present(@enforce_keys)
+    |> Validations.required_keys_present(@required_fields)
     |> then(&struct!(__MODULE__, &1))
   end
 end
